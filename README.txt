@@ -1,13 +1,5 @@
-Secuencia de prueba - Percepción y Estimación Temporal
-
-Archivos incluidos:
-- index.html: portada institucional. Avanza automáticamente al consentimiento después de 10 segundos.
-- consentimiento.html: consentimiento breve con dos opciones: acepto / no acepto.
-- test.html: pantalla temporal si acepta participar.
-- gracias.html: pantalla temporal si no acepta participar.
-- styles.css
-- app.js
-- logo_uc.svg
-- logo_cedeti.png
-
-Para GitHub Pages, subir todos estos archivos sueltos a la raíz del repositorio.
+Secuencia actual:
+1) Pantalla institucional con logos (5 segundos).
+2) Desvanecer/aparecer de 2 segundos hacia pantalla de consentimiento.
+3) Si acepta participar, va a test.html.
+4) Si no acepta participar, va a gracias.html.

@@ -1,209 +1,171 @@
 :root {
-  --uc-blue: #17356d;
-  --uc-blue-dark: #07183e;
-  --uc-accent: #2f5fb4;
-  --text: #0b1328;
-  --muted: #46536a;
-  --line: #d8dee8;
-  --white: #ffffff;
-  --shadow: 0 20px 70px rgba(17, 34, 64, 0.08);
+  --navy: #0f2357;
+  --blue: #2f4ea2;
+  --text: #1f2d3d;
+  --muted: #4d5d73;
+  --line: #d9e0ea;
+  --bg: #ffffff;
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; }
-body {
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
   color: var(--text);
-  background: radial-gradient(circle at 50% 0%, #f7f9fd 0, #fff 55%);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
 }
 
-.page {
+.app-shell {
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-.institutional-header {
+.screen {
+  min-height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 54px 74px 0;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 2s ease;
 }
 
-.institutional-header.compact {
-  padding-top: 46px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(15, 37, 77, 0.10);
+.visible { opacity: 1; pointer-events: auto; }
+.fading-out { opacity: 0; pointer-events: none; }
+.hidden { opacity: 0; pointer-events: none; position: absolute; inset: 0; }
+.fading-in { opacity: 1; pointer-events: auto; position: relative; }
+
+.intro-screen {
+  background: #fff;
+  padding: 2rem 3rem;
+}
+
+.logos-intro {
+  width: min(1400px, 92vw);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
 }
 
 .logo {
   display: block;
+  width: auto;
   object-fit: contain;
 }
-.logo-uc {
-  width: 250px;
-  height: auto;
-}
-.logo-cedeti {
-  width: 340px;
-  height: auto;
-  margin-top: 22px;
-}
-.compact .logo-uc { width: 210px; }
-.compact .logo-cedeti { width: 290px; margin-top: 18px; }
+.logo-uc { max-height: 150px; }
+.logo-cedeti { max-height: 110px; }
+.logo-facultad { max-height: 120px; }
 
-.cover-main {
-  max-width: 1120px;
-  margin: 150px auto 0;
+.consent-screen {
+  background: #fff;
+  padding: 3rem 1.5rem;
+}
+
+.consent-content {
+  width: min(980px, 92vw);
   text-align: center;
-  padding: 0 36px;
 }
 
-h1 {
-  font-family: Georgia, "Times New Roman", serif;
-  color: var(--uc-blue-dark);
-  font-size: clamp(44px, 5.8vw, 78px);
+.consent-content h1 {
+  margin: 0;
+  color: var(--navy);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.3rem, 4.8vw, 4.7rem);
+  font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -0.02em;
-  margin: 0 0 28px;
-  font-weight: 700;
 }
 
-.subtitle, .lead {
-  max-width: 970px;
-  margin: 0 auto;
-  color: var(--uc-blue);
-  font-size: clamp(22px, 2.3vw, 34px);
-  line-height: 1.42;
-  font-weight: 400;
-}
-
-.content-narrow {
-  max-width: 980px;
-  margin: 70px auto 0;
-  padding: 0 36px 64px;
-}
-.content-narrow.centered { text-align: center; margin-top: 150px; }
-.content-narrow h1 { text-align: center; font-size: clamp(40px, 4.2vw, 58px); margin-bottom: 30px; }
-.content-narrow p {
-  color: var(--text);
-  font-size: 23px;
-  line-height: 1.52;
-  text-align: center;
-  margin: 0 auto 18px;
+.subtitle {
+  margin: 1.25rem auto 0;
   max-width: 900px;
-}
-.content-narrow .lead {
-  color: var(--text);
-  font-size: 25px;
-  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: clamp(1.1rem, 2vw, 1.75rem);
+  line-height: 1.45;
 }
 
-.choice-form {
-  margin: 54px auto 0;
-  max-width: 840px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.consent-card {
+  margin: 2.7rem auto 0;
+  width: min(860px, 100%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 2.2rem 2rem 1.8rem;
 }
-.choice-card {
-  width: 100%;
-  min-height: 94px;
+
+.consent-card h2 {
+  margin: 0 0 1rem;
+  color: var(--navy);
+  font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+}
+
+.consent-card p {
+  margin: 0.5rem auto;
+  max-width: 720px;
+  color: #314256;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.consent-actions {
+  margin-top: 1.8rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  min-width: 230px;
+  padding: 1rem 1.5rem;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.08rem;
+  border: 1px solid var(--navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(15,35,87,.10); }
+.btn-primary { background: var(--navy); color: #fff; }
+.btn-secondary { background: #fff; color: var(--navy); }
+
+.thanks-screen, .test-screen {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  gap: 28px;
-  border: 1.6px solid var(--line);
-  border-radius: 10px;
-  background: rgba(255,255,255,0.65);
-  padding: 26px 34px;
-  font-size: 25px;
-  cursor: pointer;
-  transition: border-color .2s ease, box-shadow .2s ease;
-}
-.choice-card:has(input:checked) {
-  border-color: var(--uc-accent);
-  box-shadow: 0 0 0 4px rgba(47, 95, 180, 0.10);
-}
-.choice-card input {
-  appearance: none;
-  width: 34px;
-  height: 34px;
-  border: 2.5px solid var(--uc-blue);
-  border-radius: 50%;
-  margin: 0;
-  position: relative;
-  flex: 0 0 auto;
-}
-.choice-card input:checked::after {
-  content: "";
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--uc-accent);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.primary-button {
-  width: min(380px, 100%);
-  margin: 28px auto 0;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #1268e8, #064cae);
-  color: white;
-  font-size: 25px;
-  font-weight: 700;
-  padding: 24px 36px;
-  cursor: pointer;
-  box-shadow: 0 12px 30px rgba(14, 89, 204, .20);
-}
-.primary-button:disabled {
-  background: #d8dee8;
-  color: #7d8795;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-.helper-text {
-  color: var(--muted) !important;
-  font-size: 18px !important;
-  margin-top: 0 !important;
+  justify-content: center;
+  background: #fff;
+  padding: 2rem;
 }
 
-.auto-progress {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 3px;
-  background: transparent;
+.message-card {
+  width: min(760px, 92vw);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 2.5rem 2.25rem;
+  text-align: center;
 }
-.auto-progress span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: var(--uc-accent);
-  animation: fillProgress 10s linear forwards;
-  opacity: .55;
+
+.message-card h1 {
+  margin: 0;
+  color: var(--navy);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 4vw, 3.3rem);
 }
-@keyframes fillProgress { to { width: 100%; } }
+.message-card p {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
 
 @media (max-width: 900px) {
-  .institutional-header { padding: 34px 28px 0; }
-  .institutional-header.compact { padding: 30px 28px 20px; }
-  .logo-uc { width: 170px; }
-  .logo-cedeti { width: 220px; margin-top: 12px; }
-  .compact .logo-uc { width: 150px; }
-  .compact .logo-cedeti { width: 200px; }
-  .cover-main { margin-top: 120px; }
-  .choice-card { font-size: 21px; }
-}
-
-@media (max-width: 640px) {
-  .institutional-header { flex-direction: column; gap: 22px; align-items: center; }
-  .logo-cedeti { margin-top: 0; }
-  .cover-main { margin-top: 80px; }
-  .content-narrow { margin-top: 44px; }
-  .content-narrow.centered { margin-top: 80px; }
+  .logos-intro {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .logo-uc { max-height: 120px; }
+  .logo-cedeti { max-height: 92px; }
+  .logo-facultad { max-height: 100px; }
+  .consent-card { padding: 1.7rem 1.2rem 1.4rem; }
 }

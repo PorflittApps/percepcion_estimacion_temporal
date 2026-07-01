@@ -1,23 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Percepción y Estimación Temporal</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="page page-cover" data-auto-next="consentimiento.html" data-auto-delay="10000">
-  <header class="institutional-header" aria-label="Instituciones responsables">
-    <img class="logo logo-uc" src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" />
-    <img class="logo logo-cedeti" src="logo_cedeti.png" alt="Centro de Desarrollo de Tecnologías de Inclusión - CEDETi UC" />
-  </header>
+<body>
+  <main class="app-shell">
+    <section id="pantalla-intro" class="screen intro-screen visible">
+      <div class="logos-row logos-intro">
+        <img src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" class="logo logo-uc" />
+        <img src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" class="logo logo-cedeti" />
+        <img src="logo_facultad_educacion_uc.png" alt="Facultad de Educación Pontificia Universidad Católica de Chile" class="logo logo-facultad" />
+      </div>
+    </section>
 
-  <main class="cover-main" aria-label="Portada del estudio">
-    <h1>Percepción y Estimación Temporal</h1>
-    <p class="subtitle">Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos, con fines de investigación académica.</p>
+    <section id="pantalla-consentimiento" class="screen consent-screen hidden">
+      <div class="consent-content">
+        <h1>Percepción y Estimación Temporal</h1>
+        <p class="subtitle">Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos, con fines de investigación académica.</p>
+
+        <div class="consent-card">
+          <h2>Consentimiento informado</h2>
+          <p>Su participación en este estudio es voluntaria.</p>
+          <p>Las respuestas que proporcione serán utilizadas exclusivamente con fines de investigación académica, de manera confidencial y anónima.</p>
+
+          <div class="consent-actions">
+            <a class="btn btn-primary" href="test.html">Acepto participar</a>
+            <a class="btn btn-secondary" href="gracias.html">No acepto participar</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <div class="auto-progress" aria-hidden="true"><span></span></div>
   <script src="app.js"></script>
 </body>
 </html>
