@@ -7,29 +7,23 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="page-shell">
-    <section class="institutional-header" aria-label="Instituciones responsables">
-      <div class="logo-card logo-card-uc">
-        <img src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" />
-      </div>
-      <div class="separator" aria-hidden="true"></div>
-      <div class="logo-card logo-card-cedeti">
-        <img src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" />
-      </div>
-    </section>
+  <main class="landing" aria-labelledby="titulo-principal">
+    <header class="institutional-header" aria-label="Instituciones responsables">
+      <img class="logo logo-uc" src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" />
+      <div class="header-divider" aria-hidden="true"></div>
+      <img class="logo logo-cedeti" src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" />
+    </header>
 
-    <section class="hero" aria-labelledby="titulo-principal">
-      <div class="hero-card">
-        <h1 id="titulo-principal">Percepción y Estimación Temporal</h1>
-        <p class="subtitle">
-          Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos,
-          con fines de investigación académica.
-        </p>
-        <button id="startButton" class="primary-button" type="button">
-          Iniciar
-          <span aria-hidden="true">→</span>
-        </button>
-      </div>
+    <section class="hero">
+      <h1 id="titulo-principal">Percepción y Estimación Temporal</h1>
+      <p class="subtitle">
+        Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos,
+        con fines de investigación académica.
+      </p>
+      <button id="startButton" class="primary-button" type="button">
+        Iniciar
+        <span aria-hidden="true">→</span>
+      </button>
     </section>
   </main>
 
