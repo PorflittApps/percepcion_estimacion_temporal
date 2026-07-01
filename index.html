@@ -7,72 +7,42 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="page-shell">
-    <header class="institutional-header" aria-label="Encabezado institucional">
-      <section class="brand-group">
-        <div class="logo-placeholder">Logo<br>UC</div>
-        <div class="brand-text">Pontificia<br>Universidad<br>Católica de Chile</div>
-      </section>
+  <main class="page" id="app">
+    <section class="hero-screen" aria-labelledby="main-title">
+      <header class="institutional-header">
+        <div class="logo-card logo-card-uc">
+          <img src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" class="logo-uc" />
+        </div>
+        <div class="separator" aria-hidden="true"></div>
+        <div class="logo-card logo-card-cedeti">
+          <img src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" class="logo-cedeti" />
+        </div>
+      </header>
 
-      <div class="brand-divider" aria-hidden="true"></div>
-
-      <section class="brand-group">
-        <div class="logo-placeholder cedeti">Logo<br>CEDETi UC</div>
-        <div class="brand-text">Centro de Desarrollo<br>de Tecnologías de<br>Inclusión UC</div>
-      </section>
-    </header>
-
-    <section class="hero" aria-labelledby="titulo-principal">
-      <p class="eyebrow">Estudio web en desarrollo</p>
-      <h1 id="titulo-principal">Percepción y Estimación Temporal</h1>
-      <p class="subtitle">
-        Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos,
-        con fines de investigación académica.
-      </p>
-    </section>
-
-    <section class="card" aria-labelledby="estado-sitio">
-      <div class="icon-circle" aria-hidden="true">⏱</div>
-      <div>
-        <h2 id="estado-sitio">Sitio base creado correctamente</h2>
-        <p>
-          Esta es la primera versión pública de la página. En las próximas etapas se incorporarán
-          el consentimiento informado, los datos demográficos, los ítems del test y la entrega de resultados.
+      <section class="hero-content">
+        <p class="eyebrow">Estudio académico</p>
+        <h1 id="main-title">Percepción y Estimación Temporal</h1>
+        <p class="subtitle">
+          Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos.
         </p>
-      </div>
-    </section>
 
-    <section class="next-steps" aria-labelledby="proximos-pasos">
-      <h2 id="proximos-pasos">Próximos módulos</h2>
-      <div class="steps-grid">
-        <article class="step-item">
-          <span>1</span>
-          <p>Consentimiento informado</p>
-        </article>
-        <article class="step-item">
-          <span>2</span>
-          <p>Datos demográficos</p>
-        </article>
-        <article class="step-item">
-          <span>3</span>
-          <p>Estimación temporal</p>
-        </article>
-        <article class="step-item">
-          <span>4</span>
-          <p>Percepción temporal</p>
-        </article>
-        <article class="step-item">
-          <span>5</span>
-          <p>Resultados y guardado</p>
-        </article>
-      </div>
-    </section>
+        <div class="action-panel">
+          <button class="primary-button" id="startButton" type="button">
+            Comenzar
+            <span aria-hidden="true">→</span>
+          </button>
+          <button class="secondary-button" id="infoButton" type="button">
+            Ver información del estudio
+          </button>
+        </div>
+      </section>
 
-    <footer class="footer">
-      <p>
-        Si tiene dudas sobre el estudio, podrá contactarse con el equipo investigador cuando el sitio esté habilitado.
-      </p>
-    </footer>
+      <footer class="footer-note">
+        <p>
+          Pontificia Universidad Católica de Chile · Centro de Desarrollo de Tecnologías de Inclusión — CEDETi UC
+        </p>
+      </footer>
+    </section>
   </main>
 
   <script src="app.js"></script>
