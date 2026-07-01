@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consentimiento informado</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page page-consent">
+  <header class="institutional-header compact" aria-label="Instituciones responsables">
+    <img class="logo logo-uc" src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" />
+    <img class="logo logo-cedeti" src="logo_cedeti.png" alt="Centro de Desarrollo de Tecnologías de Inclusión - CEDETi UC" />
+  </header>
+
+  <main class="content-narrow" aria-label="Consentimiento informado">
+    <h1>Consentimiento informado</h1>
+    <p class="lead">Este estudio busca medir variables temporales mediante estímulos viso-auditivos, con fines de investigación académica.</p>
+    <p>Su participación es voluntaria. La información será tratada de forma confidencial y utilizada únicamente con fines académicos. Puede decidir no participar y cerrar esta página sin consecuencias.</p>
+
+    <form id="consentForm" class="choice-form">
+      <label class="choice-card">
+        <input type="radio" name="consentimiento" value="acepto" />
+        <span>Acepto participar</span>
+      </label>
+
+      <label class="choice-card">
+        <input type="radio" name="consentimiento" value="no_acepto" />
+        <span>No acepto participar</span>
+      </label>
+
+      <button class="primary-button" type="submit" disabled>Continuar</button>
+      <p class="helper-text">Para continuar, seleccione una de las opciones.</p>
+    </form>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
