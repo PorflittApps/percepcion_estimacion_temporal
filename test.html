@@ -1,3 +1,116 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Test</title><link rel="stylesheet" href="styles.css"></head>
-<body><main class="test-screen"><div class="message-card"><h1>Próxima etapa</h1><p>Aquí irá el test una vez que definamos y programemos las siguientes pantallas.</p></div></main></body></html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datos demográficos | Percepción y Estimación Temporal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="demographics-screen">
+    <section class="demographics-panel" aria-labelledby="titulo-demograficos">
+      <div class="step-label">Paso 1 de 2</div>
+      <h1 id="titulo-demograficos">Datos demográficos</h1>
+      <p class="demo-intro">
+        Antes de comenzar, necesitamos algunos antecedentes generales. 
+        Esta información será utilizada únicamente con fines de investigación académica.
+      </p>
+
+      <form id="form-demograficos" class="demo-form">
+        <div class="form-grid">
+          <label class="field">
+            <span>Sexo</span>
+            <select name="sexo" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Mujer">Mujer</option>
+              <option value="Hombre">Hombre</option>
+              <option value="Otro">Otro</option>
+              <option value="Prefiere no responder">Prefiere no responder</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>País</span>
+            <input type="text" name="pais" placeholder="Ej.: Chile" required />
+          </label>
+
+          <label class="field">
+            <span>Estudios completados</span>
+            <select name="estudios" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Básica">Básica</option>
+              <option value="Media">Media</option>
+              <option value="Técnico">Técnico</option>
+              <option value="Licenciatura">Licenciatura</option>
+              <option value="Magíster">Magíster</option>
+              <option value="Doctorado">Doctorado</option>
+            </select>
+          </label>
+
+          <fieldset class="field fieldset-full">
+            <legend>Segundo idioma: inglés</legend>
+            <p class="field-help">Marque todas las opciones que correspondan.</p>
+            <div class="check-row">
+              <label><input type="checkbox" name="H_Ing" value="1" /> Habla inglés</label>
+              <label><input type="checkbox" name="L_Ing" value="1" /> Lee inglés</label>
+              <label><input type="checkbox" name="E_Ing" value="1" /> Escucha inglés</label>
+              <label><input type="checkbox" name="W_Ing" value="1" /> Escribe inglés</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>¿Entiende una conversación sin mirar?</legend>
+            <div class="radio-row">
+              <label><input type="radio" name="ent_sin_mirar" value="1" required /> Sí</label>
+              <label><input type="radio" name="ent_sin_mirar" value="0" required /> No</label>
+            </div>
+          </fieldset>
+
+          <label class="field">
+            <span>¿Cuántas horas de música escucha al día?</span>
+            <select name="hrs_mus" required>
+              <option value="">Seleccione una opción</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5 o más">5 o más</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>¿A cuántos conciertos ha ido el último año como audiencia?</span>
+            <select name="con_anio" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Ninguno">Ninguno</option>
+              <option value="Entre 1 y 4">Entre 1 y 4</option>
+              <option value="Entre 5 y 9">Entre 5 y 9</option>
+              <option value="10 o más">10 o más</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>¿Cómo se definiría?</span>
+            <select name="autodef" required>
+              <option value="">Seleccione una opción</option>
+              <option value="No músico/a">No músico/a</option>
+              <option value="Músico/a amateur">Músico/a amateur</option>
+              <option value="Músico/a">Músico/a</option>
+              <option value="Músico/a profesional">Músico/a profesional</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Guardar y continuar</button>
+        </div>
+
+        <p id="demo-status" class="demo-status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
