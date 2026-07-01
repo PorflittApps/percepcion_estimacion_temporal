@@ -1,11 +1,9 @@
 :root {
-  --uc-blue: #123c7c;
-  --uc-blue-dark: #061944;
-  --uc-blue-soft: #eef4ff;
-  --text-main: #061944;
-  --text-secondary: #2e4778;
-  --background: #f8fbff;
-  --border-soft: #d8e3f4;
+  --uc-blue: #163f8c;
+  --uc-deep-blue: #071a44;
+  --text-main: #101828;
+  --text-soft: #293b63;
+  --background: #ffffff;
 }
 
 * {
@@ -16,19 +14,21 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--background);
   color: var(--text-main);
-  background:
-    radial-gradient(circle at 18% 15%, rgba(18, 60, 124, 0.06), transparent 28%),
-    radial-gradient(circle at 82% 25%, rgba(18, 60, 124, 0.045), transparent 28%),
-    linear-gradient(180deg, #ffffff 0%, var(--background) 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
 }
 
 .page-shell {
   min-height: 100vh;
+  width: 100%;
+  padding: 44px 74px 56px;
   display: flex;
   flex-direction: column;
-  padding: clamp(24px, 4vw, 56px) clamp(28px, 6vw, 96px) clamp(48px, 6vw, 80px);
 }
 
 .institutional-header {
@@ -36,153 +36,129 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 40px;
-}
-
-.logo-wrap {
-  display: flex;
-  align-items: center;
-}
-
-.logo-wrap-uc {
-  justify-content: flex-start;
-}
-
-.logo-wrap-cedeti {
-  justify-content: flex-end;
 }
 
 .logo {
   display: block;
   object-fit: contain;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .logo-uc {
-  height: clamp(92px, 9vw, 150px);
-  width: auto;
+  width: 310px;
+  height: auto;
 }
 
 .logo-cedeti {
-  height: clamp(64px, 6vw, 104px);
-  width: auto;
-  max-width: min(36vw, 520px);
+  width: 360px;
+  height: auto;
+  margin-top: 4px;
 }
 
 .hero {
   flex: 1;
-  width: 100%;
-  max-width: 1220px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: clamp(72px, 10vh, 130px);
-  padding-bottom: clamp(40px, 8vh, 90px);
+  padding-bottom: 40px;
 }
 
 h1 {
   margin: 0;
   max-width: 1120px;
-  font-size: clamp(3.1rem, 5.6vw, 6.4rem);
-  line-height: 1.04;
-  letter-spacing: -0.055em;
-  font-weight: 800;
-  color: var(--uc-blue-dark);
-}
-
-.subtitle {
-  margin: clamp(26px, 3vw, 40px) auto 0;
-  max-width: 980px;
-  font-size: clamp(1.35rem, 2.1vw, 2.35rem);
-  line-height: 1.42;
-  font-weight: 400;
-  color: var(--text-secondary);
-}
-
-.primary-button {
-  margin-top: clamp(42px, 5vw, 70px);
-  min-width: 210px;
-  min-height: 58px;
-  padding: 16px 44px;
-  border: none;
-  border-radius: 999px;
-  background: var(--uc-blue);
-  color: #ffffff;
-  font-size: 1.18rem;
-  font-weight: 700;
+  color: #000000;
+  font-size: clamp(2.35rem, 4.2vw, 4.4rem);
+  line-height: 1.08;
+  font-weight: 500;
   letter-spacing: 0.01em;
+}
+
+.lead {
+  margin: 32px auto 0;
+  max-width: 1060px;
+  color: #000000;
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.start-button {
+  margin-top: 72px;
+  min-width: 270px;
+  min-height: 64px;
+  border: 0;
+  border-radius: 999px;
+  background: #2d478f;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 14px 32px rgba(18, 60, 124, 0.22);
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  box-shadow: 0 18px 34px rgba(45, 71, 143, 0.18);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
-.primary-button:hover {
+.start-button:hover {
+  background: #233b7e;
   transform: translateY(-1px);
-  background: #0d3270;
-  box-shadow: 0 18px 38px rgba(18, 60, 124, 0.26);
+  box-shadow: 0 20px 40px rgba(45, 71, 143, 0.22);
 }
 
-.primary-button:active {
-  transform: translateY(0);
-  box-shadow: 0 10px 22px rgba(18, 60, 124, 0.2);
-}
-
-.primary-button:focus-visible {
-  outline: 4px solid rgba(18, 60, 124, 0.22);
+.start-button:focus-visible {
+  outline: 4px solid rgba(22, 63, 140, 0.22);
   outline-offset: 4px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .page-shell {
-    padding: 24px 22px 48px;
+    padding: 28px 22px 42px;
   }
 
   .institutional-header {
-    align-items: center;
-    gap: 20px;
+    gap: 28px;
   }
 
   .logo-uc {
-    height: 80px;
+    width: 190px;
   }
 
   .logo-cedeti {
-    height: 58px;
-    max-width: 44vw;
+    width: 235px;
+  }
+
+  .hero {
+    justify-content: flex-start;
+    padding-top: 110px;
+  }
+}
+
+@media (max-width: 640px) {
+  .institutional-header {
+    align-items: center;
+    gap: 22px;
+  }
+
+  .logo-uc {
+    width: 145px;
+  }
+
+  .logo-cedeti {
+    width: 175px;
   }
 
   .hero {
     padding-top: 80px;
   }
-}
 
-@media (max-width: 520px) {
-  .institutional-header {
-    flex-direction: column;
-    align-items: center;
+  .lead {
+    margin-top: 24px;
   }
 
-  .logo-wrap-cedeti {
-    justify-content: center;
-  }
-
-  .logo-uc {
-    height: 92px;
-  }
-
-  .logo-cedeti {
-    height: auto;
-    width: 280px;
-    max-width: 82vw;
-  }
-
-  h1 {
-    font-size: clamp(2.8rem, 13vw, 4.1rem);
-  }
-
-  .subtitle {
-    font-size: 1.25rem;
+  .start-button {
+    margin-top: 52px;
+    width: 220px;
   }
 }
