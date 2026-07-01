@@ -1,10 +1,14 @@
-const startButton = document.getElementById('startButton');
-const infoButton = document.getElementById('infoButton');
+const startButton = document.getElementById("startButton");
+const infoButton = document.getElementById("infoButton");
 
-startButton?.addEventListener('click', () => {
-  alert('Siguiente paso: pantalla de consentimiento informado.');
-});
+if (startButton) {
+  startButton.addEventListener("click", () => {
+    alert("Próximo paso: pantalla de consentimiento informado.");
+  });
+}
 
-infoButton?.addEventListener('click', () => {
-  alert('Aquí mostraremos la información ampliada del estudio antes del consentimiento.');
-});
+if (infoButton) {
+  infoButton.addEventListener("click", () => {
+    alert("Este sitio alojará el estudio Percepción y Estimación Temporal. En la siguiente etapa integraremos consentimiento, datos demográficos, tareas viso-auditivas y resultados.");
+  });
+}

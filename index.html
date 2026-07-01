@@ -4,47 +4,63 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Percepción y Estimación Temporal</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=3" />
 </head>
 <body>
   <main class="page" id="app">
     <section class="hero-screen" aria-labelledby="main-title">
-      <header class="institutional-header">
-        <div class="logo-card logo-card-uc">
-          <img src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" class="logo-uc" />
-        </div>
+      <header class="institutional-header" aria-label="Instituciones responsables">
+        <a class="brand brand-uc" href="https://www.uc.cl" target="_blank" rel="noopener noreferrer" aria-label="Pontificia Universidad Católica de Chile">
+          <img src="./logo_uc.svg?v=3" alt="Pontificia Universidad Católica de Chile" />
+        </a>
+
         <div class="separator" aria-hidden="true"></div>
-        <div class="logo-card logo-card-cedeti">
-          <img src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" class="logo-cedeti" />
-        </div>
+
+        <a class="brand brand-cedeti" href="https://www.cedeti.cl" target="_blank" rel="noopener noreferrer" aria-label="Centro de Desarrollo de Tecnologías de Inclusión - CEDETi UC">
+          <img src="./logo_cedeti.png?v=3" alt="Centro de Desarrollo de Tecnologías de Inclusión - CEDETi UC" />
+        </a>
       </header>
 
       <section class="hero-content">
-        <p class="eyebrow">Estudio académico</p>
+        <p class="eyebrow">Estudio web en desarrollo</p>
         <h1 id="main-title">Percepción y Estimación Temporal</h1>
         <p class="subtitle">
-          Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos.
+          Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos, con fines de investigación académica.
         </p>
 
-        <div class="action-panel">
-          <button class="primary-button" id="startButton" type="button">
-            Comenzar
-            <span aria-hidden="true">→</span>
-          </button>
-          <button class="secondary-button" id="infoButton" type="button">
-            Ver información del estudio
-          </button>
+        <div class="status-card" role="status">
+          <div class="status-icon" aria-hidden="true">⏱</div>
+          <div>
+            <h2>Sitio base creado correctamente</h2>
+            <p>
+              Esta es la primera versión pública de la página. En las próximas etapas se incorporarán el consentimiento informado, los datos demográficos, los ítems del test y la entrega de resultados.
+            </p>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <h2>Próximos módulos</h2>
+          <div class="module-grid" aria-label="Módulos futuros">
+            <div><span>1</span><p>Consentimiento</p></div>
+            <div><span>2</span><p>Demográficos</p></div>
+            <div><span>3</span><p>Estimación</p></div>
+            <div><span>4</span><p>Percepción</p></div>
+            <div><span>5</span><p>Resultados</p></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary-button" type="button" id="startButton">Comenzar diseño del test <span aria-hidden="true">→</span></button>
+          <button class="secondary-button" type="button" id="infoButton">Ver información del estudio</button>
         </div>
       </section>
 
       <footer class="footer-note">
-        <p>
-          Pontificia Universidad Católica de Chile · Centro de Desarrollo de Tecnologías de Inclusión — CEDETi UC
-        </p>
+        <p>Pontificia Universidad Católica de Chile · Centro de Desarrollo de Tecnologías de Inclusión — CEDETi UC</p>
       </footer>
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <script src="./app.js?v=3"></script>
 </body>
 </html>
