@@ -1,95 +1,96 @@
+const GOOGLE_SCRIPT_URL = ""; // Pegar aquí la URL del despliegue de Google Apps Script.
+const STUDY_KEY = "PET_2026_V2";
 
-window.addEventListener('DOMContentLoaded', () => {
-  setupSplashSequence();
+document.addEventListener("DOMContentLoaded", () => {
+  setupSplash();
   setupDemographics();
+  if (document.getElementById("test-card")) renderIntro();
 });
 
-function setupSplashSequence() {
-  const uc = document.getElementById('logo-uc-screen');
-  const cedeti = document.getElementById('logo-cedeti-screen');
-  const facultad = document.getElementById('logo-facultad-screen');
-  const consent = document.getElementById('consent-screen');
-  if (!uc || !cedeti || !facultad || !consent) return;
-
-  const showFor = 2500;
-  const fade = 2000;
-
-  setTimeout(() => {
-    uc.classList.remove('active');
-    setTimeout(() => { cedeti.classList.add('active'); }, fade);
-  }, showFor);
-
-  setTimeout(() => {
-    cedeti.classList.remove('active');
-    setTimeout(() => { facultad.classList.add('active'); }, fade);
-  }, showFor + fade + showFor);
-
-  setTimeout(() => {
-    facultad.classList.remove('active');
-    setTimeout(() => { consent.classList.add('active'); }, fade);
-  }, showFor + fade + showFor + fade + showFor);
+function setupSplash(){
+  const uc=document.getElementById("uc"), ce=document.getElementById("cedeti"), fa=document.getElementById("facultad"), co=document.getElementById("consent");
+  if(!uc||!ce||!fa||!co) return;
+  const show=2500, fade=2000;
+  setTimeout(()=>{uc.classList.remove("active");setTimeout(()=>ce.classList.add("active"),fade)},show);
+  setTimeout(()=>{ce.classList.remove("active");setTimeout(()=>fa.classList.add("active"),fade)},show+fade+show);
+  setTimeout(()=>{fa.classList.remove("active");setTimeout(()=>co.classList.add("active"),fade)},show+fade+show+fade+show);
 }
 
-function setupDemographics() {
-  const form = document.getElementById('form-demograficos');
-  if (!form) return;
-
-  const edadSelect = form.querySelector('select[name="edad"]');
-  if (edadSelect && edadSelect.options.length <= 1) {
-    for (let age = 12; age <= 99; age += 1) {
-      const option = document.createElement('option');
-      option.value = String(age);
-      option.textContent = String(age);
-      edadSelect.appendChild(option);
-    }
-  }
-
-  const idiomaRadios = form.querySelectorAll('input[name="segundo_idioma"]');
-  const habilidades = document.getElementById('idioma-habilidades');
-  const habilidadChecks = habilidades ? habilidades.querySelectorAll('input[type="checkbox"]') : [];
-
-  idiomaRadios.forEach((radio) => {
-    radio.addEventListener('change', () => {
-      if (!habilidades) return;
-      if (radio.value === '1' && radio.checked) {
-        habilidades.classList.add('show');
-      }
-      if (radio.value === '0' && radio.checked) {
-        habilidades.classList.remove('show');
-        habilidadChecks.forEach((check) => { check.checked = false; });
-      }
+function setupDemographics(){
+  const form=document.getElementById("form-demograficos"); if(!form) return;
+  const idioma=document.getElementById("idioma-habilidades");
+  document.querySelectorAll('input[name="segundo_idioma"]').forEach(r=>{
+    r.addEventListener("change",()=>{
+      if(r.value==="1"&&r.checked) idioma.classList.add("show");
+      if(r.value==="0"&&r.checked){idioma.classList.remove("show");idioma.querySelectorAll("input").forEach(c=>c.checked=false);}
     });
   });
-
-  const status = document.getElementById('demo-status');
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    const data = new FormData(form);
-    const payload = {
-      Edad: data.get('edad') || '',
-      Sexo: data.get('sexo') || '',
-      Pais: data.get('pais') || '',
-      Estudios: data.get('estudios') || '',
-      SegundoIdioma: data.get('segundo_idioma') || '',
-      Hablar: data.get('idioma_hablar') ? 1 : 0,
-      Escuchar: data.get('idioma_escuchar') ? 1 : 0,
-      Leer: data.get('idioma_leer') ? 1 : 0,
-      Escribir: data.get('idioma_escribir') ? 1 : 0,
-      Ent_sinMirar: data.get('ent_sin_mirar') || '',
-      hrsMus: data.get('hrs_mus') || '',
-      ConAnio: data.get('con_anio') || '',
-      AutoDef: data.get('autodef') || '',
-      registrado_en: new Date().toISOString()
-    };
-
-    localStorage.setItem('demograficos_percepcion_temporal', JSON.stringify(payload));
-    if (status) status.textContent = 'Datos guardados. Avanzando a la siguiente pantalla...';
-    setTimeout(() => { window.location.href = 'inicio_test.html'; }, 800);
+  form.addEventListener("submit",e=>{
+    e.preventDefault(); if(!form.checkValidity()){form.reportValidity();return;}
+    const data=new FormData(form); const payload=Object.fromEntries(data.entries());
+    ["hablar","escuchar","leer","escribir"].forEach(k=>payload[k]=data.get(k)?1:0);
+    payload.participant_id=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+"_"+Math.random().toString(16).slice(2));
+    payload.demograficos_registrados_en=new Date().toISOString();
+    localStorage.setItem("demograficos_percepcion_temporal",JSON.stringify(payload));
+    document.getElementById("status").textContent="Datos guardados. Avanzando...";
+    setTimeout(()=>window.location.href="inicio_test.html",700);
   });
 }
+
+const TEST_PLAN = [
+  {block:"Estimación temporal", item:1, kind:"marks", title:"Ítem 1: estimación de intervalos", instruction:"Presione iniciar. Luego marque cuando crea que han pasado 5, 10 y 20 segundos.", targets:[5,10,20], trials:[
+    {trial:1,condition:"silencio",audio:"audios/estimacion_item1/EST_Item1_Trial1_silencio.wav"},
+    {trial:2,condition:"pulso constante",audio:"audios/estimacion_item1/EST_Item1_Trial2_pulso_constante.wav"},
+    {trial:3,condition:"acelerando",audio:"audios/estimacion_item1/EST_Item1_Trial3_acelerando.wav"},
+    {trial:4,condition:"desacelerando",audio:"audios/estimacion_item1/EST_Item1_Trial4_desacelerando.wav"}]},
+  {block:"Estimación temporal", item:2, kind:"ball", title:"Ítem 2: llegada imaginada a la T", instruction:"Observe la pelota roja. Cuando desaparezca, continúe mentalmente su movimiento y presione el botón cuando crea que llegó a la T.", trials:[
+    {trial:1,condition:"silencio",audio:"audios/estimacion_item2_bola/EST_Item2_Bola_Trial1_silencio.wav",duration:15,disappear:6},
+    {trial:2,condition:"pulso constante",audio:"audios/estimacion_item2_bola/EST_Item2_Bola_Trial2_pulso_constante.wav",duration:16,disappear:8.5},
+    {trial:3,condition:"acelerando",audio:"audios/estimacion_item2_bola/EST_Item2_Bola_Trial3_acelerando.wav",duration:14,disappear:4},
+    {trial:4,condition:"desacelerando",audio:"audios/estimacion_item2_bola/EST_Item2_Bola_Trial4_desacelerando.wav",duration:18,disappear:10},
+    {trial:5,condition:"pulso irregular",audio:"audios/estimacion_item2_bola/EST_Item2_Bola_Trial5_pulso_irregular.wav",duration:15.5,disappear:6.5},
+    {trial:6,condition:"pulso constante largo",audio:"audios/estimacion_item2_bola/EST_Item2_Bola_Trial6_pulso_constante_largo.wav",duration:18,disappear:10}]},
+  {block:"Percepción temporal", item:3, kind:"pulseChange", title:"Ítem 3: cambio de pulso", instruction:"Escuchará un estímulo breve con un pulso regular. Al terminar, indique si cree que el pulso se aceleró, se mantuvo igual o se desaceleró.", trials:[
+    {trial:1,condition:"se acelera poco",difficulty:"difícil",audio:"audios/percepcion_item3_cambio_pulso/PER_Item3_CambioPulso_Trial1_acelera_poco_dificil.wav",bpmStart:92,bpmEnd:100,correct:"Se aceleró"},
+    {trial:2,condition:"se mantiene igual",difficulty:"fácil",audio:"audios/percepcion_item3_cambio_pulso/PER_Item3_CambioPulso_Trial2_igual_facil.wav",bpmStart:96,bpmEnd:96,correct:"Se mantuvo igual"},
+    {trial:3,condition:"se acelera bastante",difficulty:"fácil",audio:"audios/percepcion_item3_cambio_pulso/PER_Item3_CambioPulso_Trial3_acelera_bastante_facil.wav",bpmStart:84,bpmEnd:112,correct:"Se aceleró"},
+    {trial:4,condition:"se desacelera bastante",difficulty:"fácil",audio:"audios/percepcion_item3_cambio_pulso/PER_Item3_CambioPulso_Trial4_desacelera_bastante_facil.wav",bpmStart:112,bpmEnd:84,correct:"Se desaceleró"},
+    {trial:5,condition:"se mantiene igual a pulso muy lento",difficulty:"mediano",audio:"audios/percepcion_item3_cambio_pulso/PER_Item3_CambioPulso_Trial5_igual_lento_mediano.wav",bpmStart:56,bpmEnd:56,correct:"Se mantuvo igual"},
+    {trial:6,condition:"se desacelera muy lento",difficulty:"difícil",audio:"audios/percepcion_item3_cambio_pulso/PER_Item3_CambioPulso_Trial6_desacelera_lento_dificil.wav",bpmStart:60,bpmEnd:52,correct:"Se desaceleró"}]},
+  {block:"Percepción temporal", item:4, kind:"duration", title:"Ítem 4: intervalo entre dos bips", instruction:"Escuche el estímulo completo. Al terminar, indique cuántos segundos cree que pasaron entre el primer y el segundo bip.", responseLabel:"Segundos entre bips", trials:[
+    {trial:1,condition:"silencio",audio:"audios/percepcion_item1_dos_bips/PER_Item1_DosBips_Trial1_silencio.wav",duration:5},
+    {trial:2,condition:"pulso constante",audio:"audios/percepcion_item1_dos_bips/PER_Item1_DosBips_Trial2_pulso_constante.wav",duration:8},
+    {trial:3,condition:"acelerando",audio:"audios/percepcion_item1_dos_bips/PER_Item1_DosBips_Trial3_acelerando.wav",duration:11},
+    {trial:4,condition:"desacelerando",audio:"audios/percepcion_item1_dos_bips/PER_Item1_DosBips_Trial4_desacelerando.wav",duration:13},
+    {trial:5,condition:"pulso irregular",audio:"audios/percepcion_item1_dos_bips/PER_Item1_DosBips_Trial5_pulso_irregular.wav",duration:16.5},
+    {trial:6,condition:"pulso constante medio",audio:"audios/percepcion_item1_dos_bips/PER_Item1_DosBips_Trial6_pulso_constante_medio.wav",duration:9.3}]},
+  {block:"Percepción temporal", item:5, kind:"compare", title:"Ítem 5: comparación de duraciones", instruction:"Escuche los estímulos A y B. Al terminar, indique cuál cree que duró más.", trials:[
+    {trial:1,condition:"B mayor",audio:"audios/percepcion_item2_comparacion_AB/PER_Item2_ComparacionAB_Trial1_facil_B_mayor.wav",durA:8,durB:10,correct:"B"},
+    {trial:2,condition:"A mayor",audio:"audios/percepcion_item2_comparacion_AB/PER_Item2_ComparacionAB_Trial2_facil_A_mayor.wav",durA:12,durB:9,correct:"A"},
+    {trial:3,condition:"igual",audio:"audios/percepcion_item2_comparacion_AB/PER_Item2_ComparacionAB_Trial3_igual.wav",durA:7,durB:7,correct:"Igual"},
+    {trial:4,condition:"A mayor",audio:"audios/percepcion_item2_comparacion_AB/PER_Item2_ComparacionAB_Trial4_medio_A_mayor.wav",durA:14,durB:11,correct:"A"},
+    {trial:5,condition:"B mayor",audio:"audios/percepcion_item2_comparacion_AB/PER_Item2_ComparacionAB_Trial5_medio_B_mayor.wav",durA:6,durB:8.5,correct:"B"},
+    {trial:6,condition:"A mayor difícil",audio:"audios/percepcion_item2_comparacion_AB/PER_Item2_ComparacionAB_Trial6_dificil_A_mayor.wav",durA:10.5,durB:10,correct:"A"}]},
+  {block:"Percepción temporal", item:6, kind:"global", title:"Ítem 6: duración total del test", instruction:"¿Cuánto tiempo cree que pasó desde el inicio del primer ítem hasta este momento?"}
+];
+
+let flat=[]; TEST_PLAN.forEach(s=>{ if(s.trials) s.trials.forEach(t=>flat.push({section:s,trial:t})); else flat.push({section:s,trial:null}); });
+let index=-1,currentAudio=null,trialStart=0,testStart=0,results=[],finalRow=null;
+const card=document.getElementById("test-card"), bar=document.getElementById("progressbar"), progressText=document.getElementById("progress-text");
+function renderIntro(){card.innerHTML=`<h2>Antes de comenzar</h2><p class="instruction">Busque un lugar tranquilo. Use audífonos si lo desea. Durante la prueba, evite distraerse con el teléfono u otros estímulos visuales, táctiles o auditivos.</p><div class="big-action"><button class="btn primary" onclick="startTest()">Comenzar test</button></div>`;}
+function startTest(){testStart=performance.now();index=0;renderStep();}
+function updateProgress(){const pct=Math.max(0,Math.min(100,(index/flat.length)*100));bar.style.width=pct+"%";progressText.textContent=`Ítem ${Math.min(index+1,flat.length)} de ${flat.length}`;}
+function renderStep(){stopAudio();if(index>=flat.length)return renderFinal();updateProgress();const {section,trial}=flat[index];const meta=trial?`<div class="trial-meta">${section.block} · ${section.title} · Trial ${trial.trial}</div>`:`<div class="trial-meta">${section.block} · ${section.title}</div>`;if(section.kind==="marks")return renderMarks(section,trial,meta);if(section.kind==="ball")return renderBall(section,trial,meta);if(section.kind==="pulseChange")return renderPulseChange(section,trial,meta);if(section.kind==="duration")return renderDuration(section,trial,meta);if(section.kind==="compare")return renderCompare(section,trial,meta);if(section.kind==="global")return renderGlobal(section,meta);}
+function makeAudio(src){const a=new Audio(src);a.preload="auto";currentAudio=a;return a;}function stopAudio(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null;}}function next(){index+=1;renderStep();}
+function renderMarks(section,trial,meta){let marks=[],targetIndex=0;card.innerHTML=`${meta}<h2>${section.title}</h2><p class="instruction">${section.instruction}</p><div class="big-action"><button id="mark-btn" class="round-btn">Iniciar</button></div><p class="muted" id="hint">Primero presione iniciar. Luego marque 5, 10 y 20 segundos.</p>`;const btn=document.getElementById("mark-btn");btn.onclick=async()=>{if(targetIndex===0&&marks.length===0){trialStart=performance.now();const audio=makeAudio(trial.audio);try{await audio.play();}catch(e){alert("No se pudo reproducir el audio. Revise el volumen o permisos del navegador.");}marks.push({label:"inicio",elapsed:0});btn.textContent="5 s";document.getElementById("hint").textContent="Marque cuando crea que pasaron 5 segundos.";return;}const elapsed=(performance.now()-trialStart)/1000,target=section.targets[targetIndex];marks.push({label:`${target}s`,target,elapsed,error:target-elapsed});targetIndex++;if(targetIndex<section.targets.length){btn.textContent=section.targets[targetIndex]+" s";document.getElementById("hint").textContent=`Marque cuando crea que pasaron ${section.targets[targetIndex]} segundos.`;}else{stopAudio();btn.disabled=true;results.push({kind:"marks",block:section.block,item:section.item,trial:trial.trial,condition:trial.condition,marks});document.getElementById("hint").textContent="Respuesta registrada.";setTimeout(next,700);}};}
+function renderBall(section,trial,meta){card.innerHTML=`${meta}<h2>${section.title}</h2><p class="instruction">${section.instruction}</p><div class="arrival-area"><div class="track"></div><div class="ball" id="ball"></div><div class="targetT">T</div></div><div class="big-action"><button id="ball-main" class="btn primary">Iniciar trial</button></div><p class="muted" id="ball-hint">Presione iniciar para comenzar.</p>`;const main=document.getElementById("ball-main"),ball=document.getElementById("ball");let started=false,raf=null,hidden=false,audioEnded=false;main.onclick=async()=>{if(!started){started=true;main.textContent="Marcar llegada";trialStart=performance.now();const audio=makeAudio(trial.audio);audio.onended=()=>{audioEnded=true;document.getElementById("ball-hint").textContent="El sonido terminó. Marque cuando crea que la pelota llegó a la T.";};try{await audio.play();}catch(e){alert("No se pudo reproducir el audio.");}document.getElementById("ball-hint").textContent="Cuando la pelota desaparezca, imagine su movimiento y presione cuando llegue a la T.";const animate=()=>{const elapsed=(performance.now()-trialStart)/1000,pct=Math.min(1,elapsed/trial.duration);if(!hidden)ball.style.left=`calc(9% + ${pct} * 74%)`;if(!hidden&&elapsed>=trial.disappear){hidden=true;ball.style.display="none";}if(started)raf=requestAnimationFrame(animate);};raf=requestAnimationFrame(animate);return;}const response=(performance.now()-trialStart)/1000;stopAudio();if(raf)cancelAnimationFrame(raf);main.disabled=true;results.push({kind:"ball",block:section.block,item:section.item,trial:trial.trial,condition:trial.condition,duration:trial.duration,disappear:trial.disappear,response,error:trial.duration-response,post_disappear:response-trial.disappear,audioEnded});document.getElementById("ball-hint").textContent="Respuesta registrada.";setTimeout(next,700);};}
+function renderPulseChange(section,trial,meta){card.innerHTML=`${meta}<h2>${section.title}</h2><p class="instruction">${section.instruction}</p><div class="big-action"><button id="play-btn" class="btn primary">Reproducir estímulo</button></div><div id="response-panel" class="response-panel"><div class="option-row"><button class="btn secondary" data-resp="Se desaceleró">Se desaceleró</button><button class="btn secondary" data-resp="Se mantuvo igual">Se mantuvo igual</button><button class="btn secondary" data-resp="Se aceleró">Se aceleró</button></div></div><p class="muted" id="pulse-hint">Presione reproducir y espere a que termine.</p>`;const play=document.getElementById("play-btn"),panel=document.getElementById("response-panel");play.onclick=async()=>{play.disabled=true;const audio=makeAudio(trial.audio);audio.onended=()=>{panel.classList.add("show");document.getElementById("pulse-hint").textContent="Seleccione su respuesta.";};try{await audio.play();}catch(e){alert("No se pudo reproducir el audio.");play.disabled=false;}};panel.querySelectorAll("button").forEach(btn=>{btn.onclick=()=>{const response=btn.dataset.resp;results.push({kind:"pulseChange",block:section.block,item:section.item,trial:trial.trial,condition:trial.condition,difficulty:trial.difficulty,bpmStart:trial.bpmStart,bpmEnd:trial.bpmEnd,bpmDiff:trial.bpmEnd-trial.bpmStart,response,correct:trial.correct,score:response===trial.correct?1:0});next();};});}
+function renderDuration(section,trial,meta){card.innerHTML=`${meta}<h2>${section.title}</h2><p class="instruction">${section.instruction}</p><div class="big-action"><button id="play-btn" class="btn primary">Reproducir estímulo</button></div><div id="response-panel" class="response-panel"><label>${section.responseLabel||"Duración estimada en segundos"}: <input type="number" id="num-response" min="0" step="0.1"></label><button class="btn primary" id="save-response">Guardar</button></div><p class="muted" id="dur-hint">Presione reproducir y espere a que termine el estímulo.</p>`;const play=document.getElementById("play-btn"),panel=document.getElementById("response-panel");play.onclick=async()=>{play.disabled=true;const audio=makeAudio(trial.audio);audio.onended=()=>{panel.classList.add("show");document.getElementById("dur-hint").textContent="Ingrese su respuesta.";};try{await audio.play();}catch(e){alert("No se pudo reproducir el audio.");play.disabled=false;}};document.getElementById("save-response").onclick=()=>{const val=parseFloat(document.getElementById("num-response").value);if(Number.isNaN(val)){alert("Ingrese una respuesta numérica.");return;}results.push({kind:"duration",block:section.block,item:section.item,trial:trial.trial,condition:trial.condition,target:trial.duration,response:val,error:trial.duration-val});next();};}
+function renderCompare(section,trial,meta){card.innerHTML=`${meta}<h2>${section.title}</h2><p class="instruction">${section.instruction}</p><div class="big-action"><button id="play-btn" class="btn primary">Reproducir A y B</button></div><div id="response-panel" class="response-panel"><div class="option-row"><button class="btn secondary" data-resp="A">A duró más</button><button class="btn secondary" data-resp="B">B duró más</button><button class="btn secondary" data-resp="Igual">Duraron igual</button></div></div><p class="muted" id="cmp-hint">Presione reproducir y espere a que termine.</p>`;const play=document.getElementById("play-btn"),panel=document.getElementById("response-panel");play.onclick=async()=>{play.disabled=true;const audio=makeAudio(trial.audio);audio.onended=()=>{panel.classList.add("show");document.getElementById("cmp-hint").textContent="Seleccione su respuesta.";};try{await audio.play();}catch(e){alert("No se pudo reproducir el audio.");play.disabled=false;}};panel.querySelectorAll("button").forEach(btn=>{btn.onclick=()=>{const response=btn.dataset.resp;results.push({kind:"compare",block:section.block,item:section.item,trial:trial.trial,condition:trial.condition,durA:trial.durA,durB:trial.durB,response,correct:trial.correct,score:response===trial.correct?1:0});next();};});}
+function renderGlobal(section,meta){const elapsed=(performance.now()-testStart)/1000;card.innerHTML=`${meta}<h2>${section.title}</h2><p class="instruction">${section.instruction}</p><div class="response-panel show"><label>Minutos: <input type="number" id="min-response" min="0" step="1"></label><label>Segundos: <input type="number" id="sec-response" min="0" max="59" step="1"></label><button class="btn primary" id="save-global">Guardar</button></div>`;document.getElementById("save-global").onclick=()=>{const m=parseFloat(document.getElementById("min-response").value||"0"),s=parseFloat(document.getElementById("sec-response").value||"0");if(Number.isNaN(m)||Number.isNaN(s)){alert("Ingrese minutos y segundos.");return;}const response=m*60+s;results.push({kind:"global",block:section.block,item:section.item,real:elapsed,response,error:elapsed-response});index++;renderFinal();};}
+async function renderFinal(){stopAudio();const total=(performance.now()-testStart)/1000;finalRow=buildRow(total);localStorage.setItem("resultados_percepcion_temporal",JSON.stringify({demographics:getDemo(),results,total,row:finalRow}));const errs=results.flatMap(r=>{if(r.kind==="marks")return r.marks.filter(m=>m.target).map(m=>Math.abs(m.error));if(["ball","duration","global"].includes(r.kind))return[Math.abs(r.error)];return[];});const avg=errs.length?errs.reduce((a,b)=>a+b,0)/errs.length:0;const scored=results.filter(r=>["compare","pulseChange"].includes(r.kind)),score=scored.length?scored.reduce((a,b)=>a+b.score,0)/scored.length:0;card.innerHTML=`<h2>Gracias por participar</h2><p class="instruction">Sus respuestas han sido registradas. Puede descargar un resumen personal en PDF.</p><div class="final-grid"><div class="metric">Error absoluto promedio<strong>${avg.toFixed(2)} s</strong></div><div class="metric">Respuestas perceptivas correctas<strong>${Math.round(score*100)}%</strong></div><div class="metric">Duración del test<strong>${formatTime(total)}</strong></div><div class="metric">Mediciones registradas<strong>${results.length}</strong></div></div><p class="muted">Estos resultados son orientativos y no constituyen una evaluación diagnóstica.</p><p id="save-state" class="save-state">Guardando respuestas...</p><div class="downloads"><button class="btn primary" onclick="downloadPDF()">Descargar resumen en PDF</button></div>`;bar.style.width="100%";progressText.textContent="Finalizado";const st=document.getElementById("save-state"),ok=await sendToGoogleSheets(finalRow);if(ok.configured){st.textContent=ok.sent?"Respuestas enviadas a la planilla de investigación.":"No se pudo confirmar el envío. Las respuestas quedaron guardadas en este navegador.";st.className=ok.sent?"save-state ok":"save-state warn";}else{st.textContent="Modo piloto: falta conectar la URL de Google Sheets.";st.className="save-state warn";}}
+function getDemo(){try{return JSON.parse(localStorage.getItem("demograficos_percepcion_temporal")||"{}");}catch(e){return{};}}
+function buildRow(total){const d=getDemo();const row={N:"",fecha:new Date().toISOString(),participant_id:d.participant_id||"",Edad:d.edad||"",Sexo:d.sexo||"",Pais:d.pais||"",Estudios:d.estudios||"",SegundoIdioma:d.segundo_idioma||"",Hablar:d.hablar||0,Escuchar:d.escuchar||0,Leer:d.leer||0,Escribir:d.escribir||0,Ent_sinMirar:d.ent_sin_mirar||"",hrsMus:d.hrs_mus||"",ConAnio:d.con_anio||"",AutoDef:d.autodef||"",duracion_real_test_segundos:round(total)};results.forEach(r=>{if(r.kind==="marks")r.marks.filter(m=>m.target).forEach(m=>{row[`EST_Item${r.item}_Trial${r.trial}_${m.target}s_respuesta`]=round(m.elapsed);row[`EST_Item${r.item}_Trial${r.trial}_${m.target}s_error`]=round(m.error);});if(r.kind==="ball"){row[`EST_Item${r.item}_Trial${r.trial}_objetivo_audio`]=r.duration;row[`EST_Item${r.item}_Trial${r.trial}_bola_desaparece`]=r.disappear;row[`EST_Item${r.item}_Trial${r.trial}_respuesta_T`]=round(r.response);row[`EST_Item${r.item}_Trial${r.trial}_error_T`]=round(r.error);row[`EST_Item${r.item}_Trial${r.trial}_post_desaparicion`]=round(r.post_disappear);}if(r.kind==="pulseChange"){row[`PER_Item${r.item}_Trial${r.trial}_bpm_inicial`]=r.bpmStart;row[`PER_Item${r.item}_Trial${r.trial}_bpm_final`]=r.bpmEnd;row[`PER_Item${r.item}_Trial${r.trial}_diferencia_bpm`]=r.bpmDiff;row[`PER_Item${r.item}_Trial${r.trial}_dificultad`]=r.difficulty;row[`PER_Item${r.item}_Trial${r.trial}_condicion_correcta`]=r.correct;row[`PER_Item${r.item}_Trial${r.trial}_respuesta`]=r.response;row[`PER_Item${r.item}_Trial${r.trial}_puntaje`]=r.score;}if(r.kind==="duration"){row[`PER_Item${r.item}_Trial${r.trial}_duracion_real`]=r.target;row[`PER_Item${r.item}_Trial${r.trial}_respuesta`]=round(r.response);row[`PER_Item${r.item}_Trial${r.trial}_error`]=round(r.error);}if(r.kind==="compare"){row[`PER_Item${r.item}_Trial${r.trial}_duracion_A`]=r.durA;row[`PER_Item${r.item}_Trial${r.trial}_duracion_B`]=r.durB;row[`PER_Item${r.item}_Trial${r.trial}_respuesta`]=r.response;row[`PER_Item${r.item}_Trial${r.trial}_correcta`]=r.correct;row[`PER_Item${r.item}_Trial${r.trial}_puntaje`]=r.score;}if(r.kind==="global"){row[`PER_Item${r.item}_duracion_real_global_segundos`]=round(r.real);row[`PER_Item${r.item}_estimacion_global_segundos`]=round(r.response);row[`PER_Item${r.item}_error_global`]=round(r.error);}});return row;}
+async function sendToGoogleSheets(row){if(!GOOGLE_SCRIPT_URL)return{configured:false,sent:false};try{await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({study_key:STUDY_KEY,row})});return{configured:true,sent:true};}catch(e){return{configured:true,sent:false};}}
+function downloadPDF(){const d=getDemo(),row=finalRow||buildRow((performance.now()-testStart)/1000);const errs=results.flatMap(r=>{if(r.kind==="marks")return r.marks.filter(m=>m.target).map(m=>Math.abs(m.error));if(["ball","duration","global"].includes(r.kind))return[Math.abs(r.error)];return[];});const avg=errs.length?errs.reduce((a,b)=>a+b,0)/errs.length:0;const scored=results.filter(r=>["compare","pulseChange"].includes(r.kind)),score=scored.length?scored.reduce((a,b)=>a+b.score,0)/scored.length:0;if(window.jspdf&&window.jspdf.jsPDF){const{jsPDF}=window.jspdf,doc=new jsPDF();let y=18;doc.setFont("helvetica","bold");doc.setFontSize(16);doc.text("Resumen de participación",20,y);y+=10;doc.setFont("helvetica","normal");doc.setFontSize(11);["Estudio: Percepción y Estimación Temporal","Fecha: "+new Date().toLocaleString(),"Participante: "+(d.participant_id||"sin identificador"),"Duración real del test: "+formatTime(row.duracion_real_test_segundos||0),"Error absoluto promedio aproximado: "+avg.toFixed(2)+" segundos","Respuestas perceptivas correctas: "+Math.round(score*100)+"%","","Estos resultados son orientativos y no constituyen una evaluación diagnóstica.","Gracias por participar."].forEach(line=>{doc.text(line,20,y);y+=8;});doc.save("resumen_percepcion_temporal.pdf");}else{window.print();}}
+function round(n){return Math.round(n*1000)/1000;}function formatTime(sec){const m=Math.floor(sec/60),s=Math.round(sec%60);return `${m}:${String(s).padStart(2,"0")}`;}
