@@ -4,26 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Percepción y Estimación Temporal</title>
+  <meta name="description" content="Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos, con fines de investigación académica." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="landing" aria-labelledby="titulo-principal">
+  <main class="page-shell">
     <header class="institutional-header" aria-label="Instituciones responsables">
-      <img class="logo logo-uc" src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" />
-      <div class="header-divider" aria-hidden="true"></div>
-      <img class="logo logo-cedeti" src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" />
+      <div class="logo-wrap logo-wrap-uc">
+        <img src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile" class="logo logo-uc" />
+      </div>
+
+      <div class="logo-wrap logo-wrap-cedeti">
+        <img src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi" class="logo logo-cedeti" />
+      </div>
     </header>
 
-    <section class="hero">
-      <h1 id="titulo-principal">Percepción y Estimación Temporal</h1>
+    <section class="hero" aria-labelledby="main-title">
+      <h1 id="main-title">Percepción y Estimación Temporal</h1>
       <p class="subtitle">
-        Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos,
-        con fines de investigación académica.
+        Aplicación web orientada a medir variables temporales mediante estímulos viso-auditivos, con fines de investigación académica.
       </p>
-      <button id="startButton" class="primary-button" type="button">
-        Iniciar
-        <span aria-hidden="true">→</span>
-      </button>
+      <button class="primary-button" id="startButton" type="button">Iniciar</button>
     </section>
   </main>
 

@@ -1,9 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const startButton = document.getElementById('startButton');
+const startButton = document.getElementById("startButton");
 
-  startButton.addEventListener('click', () => {
-    // Próxima etapa: navegar a la pantalla de consentimiento informado.
-    window.location.hash = 'consentimiento';
-    startButton.textContent = 'Consentimiento informado →';
+if (startButton) {
+  startButton.addEventListener("click", () => {
+    // Próxima etapa: conectar este botón con la pantalla de consentimiento informado.
+    console.log("Iniciar: pendiente de conectar con consentimiento informado.");
   });
-});
+}
