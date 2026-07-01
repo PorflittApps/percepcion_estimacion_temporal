@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Datos demográficos</title>
-<style>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Datos demográficos</title><style>
 :root{
   --navy:#0f2357;
   --blue:#2f4ea2;
@@ -12,10 +8,13 @@
   --muted:#374151;
   --line:#d7dee9;
   --check:#155f7a;
+  --soft:#f6f8fb;
+  --ok:#0f766e;
+  --warn:#b45309;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:#fff;color:var(--text);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit}
+button,input,select{font-family:inherit}
 .app{min-height:100vh;background:#fff}
 .splash,.consent{
   min-height:100vh;width:100%;position:absolute;inset:0;background:#fff;
@@ -48,13 +47,14 @@ a{color:inherit}
 }
 .actions{margin-top:1.8rem;display:flex;justify-content:center;gap:1.1rem;flex-wrap:wrap}
 .btn{
-  min-width:230px;padding:1rem 1.45rem;border-radius:12px;text-decoration:none;
+  min-width:220px;padding:1rem 1.45rem;border-radius:12px;text-decoration:none;
   font-size:1.05rem;font-weight:700;border:1px solid var(--navy);cursor:pointer;
-  display:inline-flex;align-items:center;justify-content:center
+  display:inline-flex;align-items:center;justify-content:center;background:#fff;color:var(--navy)
 }
 .btn.primary{background:var(--navy);color:#fff}
 .btn.secondary{background:#fff;color:var(--navy)}
 .btn:hover{box-shadow:0 8px 20px rgba(15,35,87,.10);transform:translateY(-1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .demographics{
   min-height:100vh;background:#fff;padding:2.2rem 1.4rem 3rem;display:flex;justify-content:center
 }
@@ -99,21 +99,44 @@ fieldset.demo-row{border:0;padding:0;margin:0}
 }
 .card h1{font-family:Georgia,'Times New Roman',serif;color:var(--navy);font-size:3rem;margin:0 0 1rem}
 .card p{color:#4b5563;font-size:1.1rem;line-height:1.6}
+.test-page{min-height:100vh;background:#fff;padding:2rem 1.25rem;display:flex;justify-content:center}
+.test-wrap{width:min(1050px,96vw)}
+.test-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.3rem}
+.test-title{margin:0;font-family:Georgia,'Times New Roman',serif;color:var(--navy);font-size:clamp(2rem,4vw,3.2rem)}
+.progress-text{color:#4b5563;font-weight:700}
+.progressbar{height:8px;background:#e9eef6;border-radius:999px;overflow:hidden;margin:0 0 1.5rem}
+.progressbar span{display:block;height:100%;background:var(--blue);width:0%;transition:width .35s ease}
+.test-card{border:1px solid var(--line);border-radius:20px;padding:2rem;background:#fff;box-shadow:0 10px 30px rgba(15,35,87,.06)}
+.test-card h2{margin:0 0 .75rem;color:var(--navy);font-size:clamp(1.45rem,2.4vw,2rem)}
+.instruction{font-size:1.18rem;line-height:1.55;color:#26364a;margin:.5rem 0 1.4rem}
+.trial-meta{color:#64748b;font-weight:700;margin-bottom:1rem}
+.big-action{min-height:96px;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin:1.5rem 0}
+.round-btn{width:120px;height:120px;border-radius:999px;border:0;background:#c81e2c;color:#fff;font-weight:800;font-size:1.2rem;box-shadow:0 12px 26px rgba(200,30,44,.22);cursor:pointer}
+.round-btn:disabled{background:#a9b2c0;box-shadow:none;cursor:not-allowed}
+.arrival-area{position:relative;height:230px;border:1px solid #e1e7f0;border-radius:18px;background:#fbfcfe;margin:1.4rem 0;overflow:hidden}
+.track{position:absolute;left:9%;right:15%;top:50%;height:3px;background:#cbd5e1}
+.ball{position:absolute;top:calc(50% - 22px);left:9%;width:44px;height:44px;border-radius:999px;background:#e3343f;box-shadow:0 12px 26px rgba(227,52,63,.25);transition:left .05s linear}
+.targetT{position:absolute;right:8%;top:calc(50% - 58px);font-size:92px;font-weight:800;color:#333;line-height:1}
+.response-panel{display:none;margin-top:1rem;border-top:1px solid #e5eaf2;padding-top:1.25rem}
+.response-panel.show{display:block}
+.response-panel input[type=number]{font-size:1.2rem;padding:.8rem 1rem;border:1px solid #cbd5e1;border-radius:12px;width:180px;margin-right:.8rem}
+.option-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+.muted{color:#64748b}
+.final-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0}
+.metric{border:1px solid #e1e7f0;border-radius:16px;padding:1.2rem;background:#fbfcfe}
+.metric strong{display:block;color:var(--navy);font-size:1.6rem;margin-top:.3rem}
+.downloads{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.6rem}
 @media(max-width:860px){
   .demo-row,.long-row,.long-select{grid-template-columns:1fr;gap:.4rem}
   .choice-line{gap:1.1rem}
   .splash-logo{max-width:80vw}
+  .test-top{flex-direction:column;align-items:flex-start}
+  .final-grid{grid-template-columns:1fr}
 }
-</style>
-</head>
+</style></head>
 <body>
-<main class="demographics">
-  <section class="demo-wrap">
-    <h1>Datos demográficos</h1>
-    <form id="form-demograficos" class="demo-form">
-      <label class="demo-row">
-        <span class="demo-label">Edad</span>
-        <select name="edad" required><option value="">-- Seleccionar --</option><option value="12">12</option>
+<main class="demographics"><section class="demo-wrap"><h1>Datos demográficos</h1><form id="form-demograficos" class="demo-form">
+<label class="demo-row"><span class="demo-label">Edad</span><select name="edad" required><option value="">-- Seleccionar --</option><option value="12">12</option>
 <option value="13">13</option>
 <option value="14">14</option>
 <option value="15">15</option>
@@ -200,18 +223,9 @@ fieldset.demo-row{border:0;padding:0;margin:0}
 <option value="96">96</option>
 <option value="97">97</option>
 <option value="98">98</option>
-<option value="99">99</option></select>
-      </label>
-      <label class="demo-row">
-        <span class="demo-label">Sexo</span>
-        <select name="sexo" required>
-          <option value="">-- Seleccionar --</option>
-          <option>Mujer</option><option>Hombre</option><option>Otro</option><option>Prefiere no responder</option>
-        </select>
-      </label>
-      <label class="demo-row">
-        <span class="demo-label">País</span>
-        <select name="pais" required><option value="">-- Seleccionar --</option><option value="Argentina">Argentina</option>
+<option value="99">99</option></select></label>
+<label class="demo-row"><span class="demo-label">Sexo</span><select name="sexo" required><option value="">-- Seleccionar --</option><option>Mujer</option><option>Hombre</option><option>Otro</option><option>Prefiere no responder</option></select></label>
+<label class="demo-row"><span class="demo-label">País</span><select name="pais" required><option value="">-- Seleccionar --</option><option value="Argentina">Argentina</option>
 <option value="Bolivia">Bolivia</option>
 <option value="Chile">Chile</option>
 <option value="Colombia">Colombia</option>
@@ -232,88 +246,17 @@ fieldset.demo-row{border:0;padding:0;margin:0}
 <option value="República Dominicana">República Dominicana</option>
 <option value="Uruguay">Uruguay</option>
 <option value="Venezuela">Venezuela</option>
-<option value="Otro">Otro</option></select>
-      </label>
-      <label class="demo-row">
-        <span class="demo-label">Estudios</span>
-        <select name="estudios" required>
-          <option value="">-- Seleccionar --</option>
-          <option>Educación media</option><option>Técnico/a</option><option>Licenciatura</option><option>Postgrado</option>
-        </select>
-      </label>
-      <fieldset class="demo-row">
-        <legend>Manejo de un segundo idioma</legend>
-        <div class="choice-line">
-          <label>Sí <input type="radio" name="segundo_idioma" value="1" required></label>
-          <label>No <input type="radio" name="segundo_idioma" value="0" required></label>
-        </div>
-      </fieldset>
-      <fieldset id="idioma-habilidades" class="demo-row hidden-row">
-        <legend>Habilidades del segundo idioma</legend>
-        <div class="choice-line">
-          <label>Hablar <input type="checkbox" name="hablar" value="1"></label>
-          <label>Escuchar <input type="checkbox" name="escuchar" value="1"></label>
-          <label>Leer <input type="checkbox" name="leer" value="1"></label>
-          <label>Escribir <input type="checkbox" name="escribir" value="1"></label>
-        </div>
-      </fieldset>
-      <fieldset class="demo-row long-row">
-        <legend>¿Puede entender una conversación sin la necesidad de mirar? <span class="note">(por ejemplo en el transporte público, en un café o restorán, en una clase, etc.).</span></legend>
-        <div class="choice-line compact">
-          <label>Sí <input type="radio" name="ent_sin_mirar" value="1" required></label>
-          <label>No <input type="radio" name="ent_sin_mirar" value="0" required></label>
-        </div>
-      </fieldset>
-      <label class="demo-row long-select">
-        <span class="demo-label">¿Cuántas horas de música escucha en promedio al día?</span>
-        <select name="hrs_mus" required>
-          <option value="">-- Seleccionar --</option>
-          <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5 o más</option>
-        </select>
-      </label>
-      <label class="demo-row long-select">
-        <span class="demo-label">¿A cuántos conciertos ha asistido el último año?</span>
-        <select name="con_anio" required>
-          <option value="">-- Seleccionar --</option>
-          <option>Ninguno</option><option>Entre 1 y 4</option><option>Entre 5 y 9</option><option>10 o más</option>
-        </select>
-      </label>
-      <label class="demo-row long-select">
-        <span class="demo-label">¿Con qué categoría de las siguientes se siente más identificado/a?</span>
-        <select name="autodef" required>
-          <option value="">-- Seleccionar --</option>
-          <option>No músico/a</option><option>Músico/a amateur</option><option>Músico/a</option><option>Músico/a profesional</option>
-        </select>
-      </label>
-      <div class="form-actions"><button class="btn primary" type="submit">Guardar y continuar</button></div>
-      <p id="status" class="status"></p>
-    </form>
-  </section>
-</main>
+<option value="Otro">Otro</option></select></label>
+<label class="demo-row"><span class="demo-label">Estudios</span><select name="estudios" required><option value="">-- Seleccionar --</option><option>Educación media</option><option>Técnico/a</option><option>Licenciatura</option><option>Postgrado</option></select></label>
+<fieldset class="demo-row"><legend>Manejo de un segundo idioma</legend><div class="choice-line"><label>Sí <input type="radio" name="segundo_idioma" value="1" required></label><label>No <input type="radio" name="segundo_idioma" value="0" required></label></div></fieldset>
+<fieldset id="idioma-habilidades" class="demo-row hidden-row"><legend>Habilidades del segundo idioma</legend><div class="choice-line"><label>Hablar <input type="checkbox" name="hablar" value="1"></label><label>Escuchar <input type="checkbox" name="escuchar" value="1"></label><label>Leer <input type="checkbox" name="leer" value="1"></label><label>Escribir <input type="checkbox" name="escribir" value="1"></label></div></fieldset>
+<fieldset class="demo-row long-row"><legend>¿Puede entender una conversación sin la necesidad de mirar? <span class="note">(por ejemplo en el transporte público, en un café o restorán, en una clase, etc.).</span></legend><div class="choice-line compact"><label>Sí <input type="radio" name="ent_sin_mirar" value="1" required></label><label>No <input type="radio" name="ent_sin_mirar" value="0" required></label></div></fieldset>
+<label class="demo-row long-select"><span class="demo-label">¿Cuántas horas de música escucha en promedio al día?</span><select name="hrs_mus" required><option value="">-- Seleccionar --</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5 o más</option></select></label>
+<label class="demo-row long-select"><span class="demo-label">¿A cuántos conciertos ha asistido el último año?</span><select name="con_anio" required><option value="">-- Seleccionar --</option><option>Ninguno</option><option>Entre 1 y 4</option><option>Entre 5 y 9</option><option>10 o más</option></select></label>
+<label class="demo-row long-select"><span class="demo-label">¿Con qué categoría de las siguientes se siente más identificado/a?</span><select name="autodef" required><option value="">-- Seleccionar --</option><option>No músico/a</option><option>Músico/a amateur</option><option>Músico/a</option><option>Músico/a profesional</option></select></label>
+<div class="form-actions"><button class="btn primary" type="submit">Guardar y continuar</button></div><p id="status" class="status"></p>
+</form></section></main>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form-demograficos");
-  const idioma = document.getElementById("idioma-habilidades");
-  document.querySelectorAll('input[name="segundo_idioma"]').forEach(r => {
-    r.addEventListener("change", () => {
-      if (r.value === "1" && r.checked) idioma.classList.add("show");
-      if (r.value === "0" && r.checked) {
-        idioma.classList.remove("show");
-        idioma.querySelectorAll("input").forEach(c => c.checked = false);
-      }
-    });
-  });
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    const data = new FormData(form);
-    const payload = Object.fromEntries(data.entries());
-    ["hablar","escuchar","leer","escribir"].forEach(k => payload[k] = data.get(k) ? 1 : 0);
-    localStorage.setItem("demograficos_percepcion_temporal", JSON.stringify(payload));
-    document.getElementById("status").textContent = "Datos guardados. Avanzando...";
-    setTimeout(() => window.location.href = "inicio_test.html", 700);
-  });
-});
+document.addEventListener("DOMContentLoaded",()=>{const form=document.getElementById("form-demograficos"),idioma=document.getElementById("idioma-habilidades");document.querySelectorAll('input[name="segundo_idioma"]').forEach(r=>{r.addEventListener("change",()=>{if(r.value==="1"&&r.checked)idioma.classList.add("show");if(r.value==="0"&&r.checked){idioma.classList.remove("show");idioma.querySelectorAll("input").forEach(c=>c.checked=false);}})});form.addEventListener("submit",e=>{e.preventDefault();if(!form.checkValidity()){form.reportValidity();return;}const data=new FormData(form);const payload=Object.fromEntries(data.entries());["hablar","escuchar","leer","escribir"].forEach(k=>payload[k]=data.get(k)?1:0);localStorage.setItem("demograficos_percepcion_temporal",JSON.stringify(payload));document.getElementById("status").textContent="Datos guardados. Avanzando...";setTimeout(()=>window.location.href="inicio_test.html",700);});});
 </script>
-</body>
-</html>
+</body></html>

@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Percepción y Estimación Temporal</title>
-<style>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Percepción y Estimación Temporal</title><style>
 :root{
   --navy:#0f2357;
   --blue:#2f4ea2;
@@ -12,10 +8,13 @@
   --muted:#374151;
   --line:#d7dee9;
   --check:#155f7a;
+  --soft:#f6f8fb;
+  --ok:#0f766e;
+  --warn:#b45309;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:#fff;color:var(--text);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit}
+button,input,select{font-family:inherit}
 .app{min-height:100vh;background:#fff}
 .splash,.consent{
   min-height:100vh;width:100%;position:absolute;inset:0;background:#fff;
@@ -48,13 +47,14 @@ a{color:inherit}
 }
 .actions{margin-top:1.8rem;display:flex;justify-content:center;gap:1.1rem;flex-wrap:wrap}
 .btn{
-  min-width:230px;padding:1rem 1.45rem;border-radius:12px;text-decoration:none;
+  min-width:220px;padding:1rem 1.45rem;border-radius:12px;text-decoration:none;
   font-size:1.05rem;font-weight:700;border:1px solid var(--navy);cursor:pointer;
-  display:inline-flex;align-items:center;justify-content:center
+  display:inline-flex;align-items:center;justify-content:center;background:#fff;color:var(--navy)
 }
 .btn.primary{background:var(--navy);color:#fff}
 .btn.secondary{background:#fff;color:var(--navy)}
 .btn:hover{box-shadow:0 8px 20px rgba(15,35,87,.10);transform:translateY(-1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .demographics{
   min-height:100vh;background:#fff;padding:2.2rem 1.4rem 3rem;display:flex;justify-content:center
 }
@@ -99,24 +99,46 @@ fieldset.demo-row{border:0;padding:0;margin:0}
 }
 .card h1{font-family:Georgia,'Times New Roman',serif;color:var(--navy);font-size:3rem;margin:0 0 1rem}
 .card p{color:#4b5563;font-size:1.1rem;line-height:1.6}
+.test-page{min-height:100vh;background:#fff;padding:2rem 1.25rem;display:flex;justify-content:center}
+.test-wrap{width:min(1050px,96vw)}
+.test-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.3rem}
+.test-title{margin:0;font-family:Georgia,'Times New Roman',serif;color:var(--navy);font-size:clamp(2rem,4vw,3.2rem)}
+.progress-text{color:#4b5563;font-weight:700}
+.progressbar{height:8px;background:#e9eef6;border-radius:999px;overflow:hidden;margin:0 0 1.5rem}
+.progressbar span{display:block;height:100%;background:var(--blue);width:0%;transition:width .35s ease}
+.test-card{border:1px solid var(--line);border-radius:20px;padding:2rem;background:#fff;box-shadow:0 10px 30px rgba(15,35,87,.06)}
+.test-card h2{margin:0 0 .75rem;color:var(--navy);font-size:clamp(1.45rem,2.4vw,2rem)}
+.instruction{font-size:1.18rem;line-height:1.55;color:#26364a;margin:.5rem 0 1.4rem}
+.trial-meta{color:#64748b;font-weight:700;margin-bottom:1rem}
+.big-action{min-height:96px;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin:1.5rem 0}
+.round-btn{width:120px;height:120px;border-radius:999px;border:0;background:#c81e2c;color:#fff;font-weight:800;font-size:1.2rem;box-shadow:0 12px 26px rgba(200,30,44,.22);cursor:pointer}
+.round-btn:disabled{background:#a9b2c0;box-shadow:none;cursor:not-allowed}
+.arrival-area{position:relative;height:230px;border:1px solid #e1e7f0;border-radius:18px;background:#fbfcfe;margin:1.4rem 0;overflow:hidden}
+.track{position:absolute;left:9%;right:15%;top:50%;height:3px;background:#cbd5e1}
+.ball{position:absolute;top:calc(50% - 22px);left:9%;width:44px;height:44px;border-radius:999px;background:#e3343f;box-shadow:0 12px 26px rgba(227,52,63,.25);transition:left .05s linear}
+.targetT{position:absolute;right:8%;top:calc(50% - 58px);font-size:92px;font-weight:800;color:#333;line-height:1}
+.response-panel{display:none;margin-top:1rem;border-top:1px solid #e5eaf2;padding-top:1.25rem}
+.response-panel.show{display:block}
+.response-panel input[type=number]{font-size:1.2rem;padding:.8rem 1rem;border:1px solid #cbd5e1;border-radius:12px;width:180px;margin-right:.8rem}
+.option-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+.muted{color:#64748b}
+.final-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0}
+.metric{border:1px solid #e1e7f0;border-radius:16px;padding:1.2rem;background:#fbfcfe}
+.metric strong{display:block;color:var(--navy);font-size:1.6rem;margin-top:.3rem}
+.downloads{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.6rem}
 @media(max-width:860px){
   .demo-row,.long-row,.long-select{grid-template-columns:1fr;gap:.4rem}
   .choice-line{gap:1.1rem}
   .splash-logo{max-width:80vw}
+  .test-top{flex-direction:column;align-items:flex-start}
+  .final-grid{grid-template-columns:1fr}
 }
-</style>
-</head>
+</style></head>
 <body>
 <main class="app">
-  <section id="uc" class="splash active">
-    <img class="splash-logo logo-uc-only" src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile">
-  </section>
-  <section id="cedeti" class="splash">
-    <img class="splash-logo logo-cedeti-only" src="logo_cedeti.png" alt="Centro UC Desarrollo de Tecnologías de Inclusión - CEDETi">
-  </section>
-  <section id="facultad" class="splash">
-    <img class="splash-logo logo-facultad-only" src="logo_facultad_educacion_uc.png" alt="Facultad de Educación UC">
-  </section>
+  <section id="uc" class="splash active"><img class="splash-logo logo-uc-only" src="logo_uc.svg" alt="Pontificia Universidad Católica de Chile"></section>
+  <section id="cedeti" class="splash"><img class="splash-logo logo-cedeti-only" src="logo_cedeti.png" alt="CEDETi UC"></section>
+  <section id="facultad" class="splash"><img class="splash-logo logo-facultad-only" src="logo_facultad_educacion_uc.png" alt="Facultad de Educación UC"></section>
   <section id="consent" class="consent">
     <div class="consent-inner">
       <h1>Percepción y Estimación Temporal</h1>
@@ -126,38 +148,16 @@ fieldset.demo-row{border:0;padding:0;margin:0}
         <p>Su participación en este estudio es voluntaria.</p>
         <p>Las respuestas que proporcione serán utilizadas exclusivamente con fines de investigación académica, de manera confidencial y anónima.</p>
         <p>Requerirá de escuchar con o sin audífonos la prueba, evitando tener distractores visuales, táctiles o auditivos, como por ejemplo, concentrarse en el teléfono.</p>
-        <div class="actions">
-          <a class="btn primary" href="test.html">Acepto participar</a>
-          <a class="btn secondary" href="gracias.html">No acepto participar</a>
-        </div>
+        <div class="actions"><a class="btn primary" href="test.html">Acepto participar</a><a class="btn secondary" href="gracias.html">No acepto participar</a></div>
       </div>
     </div>
   </section>
 </main>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const uc = document.getElementById("uc");
-  const cedeti = document.getElementById("cedeti");
-  const facultad = document.getElementById("facultad");
-  const consent = document.getElementById("consent");
-  const show = 2500;
-  const fade = 2000;
-
-  setTimeout(() => {
-    uc.classList.remove("active");
-    setTimeout(() => cedeti.classList.add("active"), fade);
-  }, show);
-
-  setTimeout(() => {
-    cedeti.classList.remove("active");
-    setTimeout(() => facultad.classList.add("active"), fade);
-  }, show + fade + show);
-
-  setTimeout(() => {
-    facultad.classList.remove("active");
-    setTimeout(() => consent.classList.add("active"), fade);
-  }, show + fade + show + fade + show);
+document.addEventListener("DOMContentLoaded",()=>{const uc=document.getElementById("uc"),ce=document.getElementById("cedeti"),fa=document.getElementById("facultad"),co=document.getElementById("consent");const show=2500,fade=2000;
+setTimeout(()=>{uc.classList.remove("active");setTimeout(()=>ce.classList.add("active"),fade)},show);
+setTimeout(()=>{ce.classList.remove("active");setTimeout(()=>fa.classList.add("active"),fade)},show+fade+show);
+setTimeout(()=>{fa.classList.remove("active");setTimeout(()=>co.classList.add("active"),fade)},show+fade+show+fade+show);
 });
 </script>
-</body>
-</html>
+</body></html>
